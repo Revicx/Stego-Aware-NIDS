@@ -4,8 +4,7 @@ redef Weird::actions: table[string] of Weird::Action += {
          ["Possible_Steganography"] = Weird::ACTION_NOTICE,
 };
 
-
-global local_address : addr = 192.168.0.235;
+global local_address:addr=192.168.0.235;
 
 type ID: record {
         src: addr;

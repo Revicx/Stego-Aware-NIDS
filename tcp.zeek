@@ -35,11 +35,11 @@ event tcp_packet (c: connection, is_orig: bool, flags: string, seq: count, ack: 
 			if (i == "R" && payload != "")
 				{
 				print "Possible Stego, the RST flag is up and the payload is not empty.";
-				# NOTICE([$note=Possible_Steganography,
-				# 	$msg = "Possible RST/payload TCP steganography",
-				# 	$ts=network_time(),
-				# 	$sub = "The RST flag is set and payload is not empty.",
-				# 	$conn = c]);
+				NOTICE([$note=Possible_Steganography,
+				 	$msg = "Possible RST/payload TCP steganography",
+				 	$ts=network_time(),
+				 	$sub = "The RST flag is set and payload is not empty.",
+				 	$conn = c]);
 				}
 		}
 	old_seq_TCP = seq;
@@ -47,15 +47,15 @@ event tcp_packet (c: connection, is_orig: bool, flags: string, seq: count, ack: 
 
 
 event new_packet (c: connection, p: pkt_hdr){
-	#REserved bits check
+	#Reserved bits check
 	if(p ?$ tcp && p$tcp$reserved != 0 ){
 			# print "Reserved bits number is : ",p$tcp$reserved;
 			# print "Possible Reserved Bits Stego";
-			# NOTICE([$note=Possible_Steganography,
-            #                       $msg = "Possible reserved bits TCP steganography",
-			# 	  $ts=network_time(),
-            #                       $sub = "TCP reserved bits are not equal to zero",
-            #                       $conn = c]);
+			 NOTICE([$note=Possible_Steganography,
+                                   $msg = "Possible reserved bits TCP steganography",
+			 	  $ts=network_time(),
+                                   $sub = "TCP reserved bits are not equal to zero",
+                                   $conn = c]);
                         Weird::weird([
                         $ts=network_time(),
                         $name="Possible_Staeganography",
@@ -66,6 +66,11 @@ event new_packet (c: connection, p: pkt_hdr){
 	if(p ?$ tcp){
 		if(p$tcp$reserved != 0 && !TCP_Urgent){
 			#print "Possibile stego URG flag is 0 and urgent pointer exists";
+			NOTICE([$note=Possible_Steganography,
+                		                $msg = "Possible urgent pointer TCP steganography",
+        	                	        $sub = "Possibile stego URG flag is 0 and urgent pointer exists",
+						   				$ts=network_time(),
+	                                	$conn = c]);
 		}
 	}
 
@@ -94,7 +99,7 @@ event new_packet (c: connection, p: pkt_hdr){
 						print(TCP_seq[id]$c);
 						print("possible stego seq");
 						NOTICE([$note=Possible_Steganography,
-                		                   $msg = "Possible seq numbe TCP steganography",
+                		                   $msg = "Possible seq number TCP steganography",
         	                	           $sub = "SEQ number not increasing",
 						   $ts=network_time(),
 	                                	   $conn = c]);
@@ -121,7 +126,7 @@ event new_packet (c: connection, p: pkt_hdr){
 									print "possible port stego";
 		      					NOTICE([$note=Possible_Steganography,
                                                    		$msg = "Possible source port TCP steganography",
-                                                  		$sub = "Source port number changing too requently",
+                                                  		$sub = "Source port number changing too frequently",
 								$ts=network_time(),
                                                    		$conn = c]);
 															TCP_port[id]$t = network_time();
@@ -155,7 +160,7 @@ event new_packet (c: connection, p: pkt_hdr){
 									print p$ip$src;
 		      					NOTICE([$note=Possible_Steganography,
                                                    		$msg = "Possible window TCP steganography",
-                                                  		$sub = "Window changing too requently",
+                                                  		$sub = "Window changing too frequently",
 								$ts=network_time(),
                                                    		$conn = c]);
 							TCP_win[id]$t = network_time();
