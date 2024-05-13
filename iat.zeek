@@ -14,7 +14,7 @@ function variance(vec: vector of interval, cou: count){
 	local var : double = 0;
 	local cv : double = 0;
 	local vec2: vector of double;
-
+    print vec;
 	for (i in vec){
 		sum += |vec[i]|;
 	}
@@ -61,7 +61,8 @@ function cheek_intervals(tab: table[addr] of IAT, address: addr, c: connection, 
 		tab[address]$t = network_time();
 		
 		#another packet cought
-		# print tab[address]$c;
+		#print tab[address]$c;
+		#print tab[address]$v;
 		tab[address]$c += 1;
 		#after one minute check the interval 
 		if(tab[address]$c > 10){
@@ -69,7 +70,7 @@ function cheek_intervals(tab: table[addr] of IAT, address: addr, c: connection, 
 			local vo: vector of interval = sort(tab[address]$v);
 			for (i in vo){
 				# print "interval: ",|vo[i]|;
-				if (i != |vo|-1){
+				if (i != |vo|-1 && |vo[i]| != 0){
 					# print "delta: ",|vo[i]-vo[i+1]|;
 					# print "devided ",|(|vo[i]-vo[i+1]|)/vo[i]|;
 					if(|(|vo[i]-vo[i+1]|)/vo[i]| > 0.5){
