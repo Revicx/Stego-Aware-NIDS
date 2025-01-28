@@ -14,8 +14,10 @@ type ID: record {
 type VTC: record {
     v: int; #current value 
     t: time; #time of catching the packet
-    c: count; #stego packets
-    a: count; #absolute number of packets 
+    c: double; #stego packets
+    a: double; #absolute number of packets
+    threshold: double &optional;  # Dynamic threshold for detection
+    pkt: pkt_hdr &optional; #packet header
 };
 
 
